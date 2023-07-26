@@ -1,9 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 const {word} = Astro.params;
-console.log(word);
+if(!word){
+window.location.href = "/";
+}
+
+let response = await fetch(`http://localhost:5280/api/word/${word}`);
+let wordDefinition  = await response.json();
+console.log(wordDefinition);
 ---
 
 <Layout title="">
-    <main class="">{word}</main> 
+    <main class="">{wordDefinition.definition} {wordDefinition.word}</main> 
 </Layout>
