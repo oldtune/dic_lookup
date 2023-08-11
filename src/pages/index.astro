@@ -1,18 +1,13 @@
 ---
-import { WordLookup } from '../components/word-lookup';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Quick Dic">
-	<main>
-		<WordLookup word='""'  client:only="react"></WordLookup>
-	</main>
-</Layout>
+<Layout title="Quick Dic" word="''" />
 
 <style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+  }
 </style>
