@@ -9,6 +9,6 @@ let response = await fetch(`http://localhost:5280/api/word/${word}`);
 let wordDefinition = await response.json();
 ---
 
-<Layout title="">
+<Layout title="" word="''">
   <main class="">{wordDefinition.definition} {wordDefinition.word}</main>
 </Layout>

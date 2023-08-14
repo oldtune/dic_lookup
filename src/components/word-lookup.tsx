@@ -10,12 +10,16 @@ export const WordLookup: React.FC<WordLookupProps> = (props: WordLookupProps) =>
   const [inputValue, setInputValue] = useState(props.word);
   const formRef = useRef<any>();
   const suggestionDiaglogRef = useRef<any>();
+  const [suggestionList, setSuggestionList] = useState<string[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+
+  const hasSelection = selectedIndex >= 0 && suggestionList.length >= 1;
 
   useEffect(() => {
     if (props.word) {
       setInputValue(props.word);
     }
-  })
+  }, [props.word, inputValue])
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
