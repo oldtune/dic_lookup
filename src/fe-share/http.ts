@@ -2,7 +2,7 @@ import axios from "axios";
 import { createError, createOk, type Result } from "../share/result";
 
 export const Http = {
-    get: async (header: Map<string, string>, query: Map<string, string>, endpoint: string, path: string) => {
+    get: async <T>(header: Map<string, string>, query: Map<string, string>, endpoint: string, path: string): Promise<Result<T>> => {
         return await performHttpRequest(HttpMethod.Get, `${endpoint}${path}`);
     },
 };
@@ -10,9 +10,10 @@ export const Http = {
 const performHttpRequest = async <T>(method: HttpMethod, endpoint: string): Promise<Result<T>> => {
     const result = await axios.get(endpoint);
     if (result.status == 200) {
-        createOk(result.data);
+        return createOk(result.data);
     }
-    return createError(result.statusText);
+
+    return createError(result.statusText) as Result<T>;
 };
 
 export enum HttpMethod {

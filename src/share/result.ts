@@ -1,4 +1,4 @@
-export type Result<T> = Ok<T> | Error;
+export type Result<T> = (Ok<T> | Error);
 
 export type Ok<T> = {
     data: T
@@ -27,9 +27,13 @@ export async function createResultPromise<T>(promise: Promise<T>): Promise<Resul
     }
     catch (ex) {
         if (typeof ex == "string") {
-            return createError(ex as string, null);
+            return createError(ex as string, null) as Result<T>;
         }
 
         return createError("", ex) as Result<T>;
     }
+}
+
+export function match<T>(result: Result<T>, onOk: (Ok<T>), onError: (Error)): void {
+    if (typeof (result))
 }
