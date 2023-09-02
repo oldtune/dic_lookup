@@ -2,7 +2,7 @@ import axios from "axios";
 import { createError, createOk, type Result } from "../share/result";
 
 export const Http = {
-    get: async <T>(header: Map<string, string>, query: Map<string, string>, endpoint: string, path: string): Promise<Result<T>> => {
+    get: async <T>(endpoint: string, path: string, header?: Map<string, string>, query?: Map<string, string>): Promise<Result<T>> => {
         return await performHttpRequest(HttpMethod.Get, `${endpoint}${path}`);
     },
 };

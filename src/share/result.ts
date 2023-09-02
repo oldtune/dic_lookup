@@ -34,6 +34,10 @@ export async function createResultPromise<T>(promise: Promise<T>): Promise<Resul
     }
 }
 
-export function match<T>(result: Result<T>, onOk: (Ok<T>), onError: (Error)): void {
-    if (typeof (result))
+export function match<T>(result: Result<T>, onOk: (data: Ok<T>) => void, onError: (error: Error) => void): void {
+    if (result instanceof Error) {
+        onError(result as Error);
+    }
+
+    onOk(result as Ok<T>);
 }
