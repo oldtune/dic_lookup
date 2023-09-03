@@ -11,7 +11,6 @@ export type WordLookupProps = {
 
 export const WordLookup: React.FC<WordLookupProps> = (props: WordLookupProps) => {
   const [inputValue, setInputValue] = useState(props.word);
-  const [beingFocused, setBeingFocused] = useState(true);
   const formRef = useRef<any>();
   const [suggestions, setSuggestions] = useState<WordSuggestion[]>([]);
   const suggestionDiaglogRef = useRef<any>();
@@ -47,14 +46,62 @@ export const WordLookup: React.FC<WordLookupProps> = (props: WordLookupProps) =>
     navigateToWord(word);
   }
 
+  const hasSelection = selectedIndex > -1;
+  const suggestionNotEmpty = suggestions.length > 0;
+
+  const enterPressedHandler = () => {
+    if (selectedIndex > -1) {
+      navigateToWord(suggestions[selectedIndex].word);
+    }
+    else {
+      navigateToWord(inputValue);
+    }
+  };
+
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key == "ArrowUp" || event.key == "ArrowDown") {
-      console.log('prevent up down event');
+    if (event.key == "Enter") {
       event.preventDefault();
+      enterPressedHandler();
+      return;
+    }
+
+    if (event.key == "ArrowUp" || event.key == "ArrowDown") {
+      event.preventDefault();
+      const suggestionEmpty = !suggestionNotEmpty;
+
+      if (suggestionEmpty) {
+        return;
+      }
+
+      const suggestionMaxIndex = suggestions.length - 1;
+
+      if (event.key == "ArrowUp") {
+        if (selectedIndex == -1 || selectedIndex == 0) {
+          setSelectedIndex(suggestionMaxIndex);
+          return;
+        }
+        if (selectedIndex > 0) {
+          setSelectedIndex(selectedIndex - 1);
+          return;
+        }
+      }
+
+      if (event.key == "ArrowDown") {
+        if (selectedIndex == -1 || selectedIndex == suggestionMaxIndex) {
+          setSelectedIndex(0);
+          return;
+        }
+        if (selectedIndex > -1 && selectedIndex < suggestionMaxIndex) {
+          setSelectedIndex(selectedIndex + 1);
+        }
+      }
     }
   }
 
-  const suggestionItems = suggestions.map((suggestion) => <div className="border-l-8 border-transparent cursor-pointer hover:border-sky-600" key={suggestion.word}>{suggestion.word}</div>)
+
+  const isSelected = (suggestion: string) => hasSelection && suggestionNotEmpty && suggestions[selectedIndex].word == suggestion;
+
+  const suggestionItems = suggestions.map((suggestion) => <div className={`${isSelected(suggestion.word) ? "selected" : ""} border-l-8 border-transparent cursor-pointer hover:border-sky-600`} key={suggestion.word}>{suggestion.word}</div>)
 
   return (<div className="relative overflow-visible">
     <div className="relative word-lookup-wrapper">

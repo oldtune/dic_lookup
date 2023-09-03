@@ -1,9 +1,9 @@
-import { createOk, type Result } from "../share/result";
+import type { Result } from "../share/result";
+import { Http } from "./http";
 
 export const DictionaryApi = {
     getSuggestion: async (word: string): Promise<Result<WordSuggestion[]>> => {
-        // return await Http.get("http://localhost:5280/", `api/word/${word}`);
-        return Promise.resolve(createOk<WordSuggestion[]>([{ word: 'hello' }, { word: 'hi' }, { word: 'hallah' }]));
+        return await Http.get(import.meta.env.PUBLIC_DICTIONARY_API, `api/word/${word}`);
     }
 }
 
