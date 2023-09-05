@@ -1,0 +1,6 @@
+.word-detail {
+  font-weight: 600;
+  color: rgb(97, 109, 138);
+  letter-spacing: 1.2px;
+  text-rendering: optimizeSpeed;
+}

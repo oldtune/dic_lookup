@@ -1,14 +1,31 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import "./word.css";
 const { word } = Astro.params;
-if (!word) {
-  window.location.href = "/";
-}
+// if (!word) {
+//   window.location.href = "/";
+// }
 
-let response = await fetch(`${import.meta.env.BACKEND}api/word/${word}`);
-let wordDefinition = await response.json();
+// let response = await fetch(`${import.meta.env.BACKEND}api/word/${word}`);
+// let wordDefinition = await response.json();
 ---
 
 <Layout title="" word="''">
-  <main class="">{wordDefinition.definition} {wordDefinition.word}</main>
+  <!-- <main class="">{wordDefinition.definition} {wordDefinition.word}</main> -->
+  <div>
+    <div>
+      <h2 class="uppercase word-detail">
+        Hello | <span>/heˈləʊ/</span> | <span class="cursor-pointer"
+          ><i class="fa-solid fa-headphones"></i> US</span
+        >|
+        <span class="cursor-pointer"
+          ><i class="fa-solid fa-headphones"></i> UK</span
+        >
+      </h2>
+      <div>
+        <h4 class="uppercase word-detail">Nounce</h4>
+        Wiggling
+      </div>
+    </div>
+  </div>
 </Layout>
