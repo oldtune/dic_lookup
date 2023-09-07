@@ -1,13 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import type { WordDefinition } from "../../models/word-definition";
 import "./word.css";
 const { word } = Astro.params;
-// if (!word) {
-//   window.location.href = "/";
-// }
+if (!word) {
+  window.location.href = "/";
+}
 
-// let response = await fetch(`${import.meta.env.BACKEND}api/word/${word}`);
-// let wordDefinition = await response.json();
+let response = await fetch(`${import.meta.env.BACKEND}api/word/${word}`);
+let wordDefinition: WordDefinition = await response.json();
+console.log(wordDefinition);
 ---
 
 <Layout title="" word="''">
@@ -15,7 +17,7 @@ const { word } = Astro.params;
   <div>
     <div>
       <h2 class="uppercase word-detail">
-        Hello | <span>/heˈləʊ/</span> | <span class="cursor-pointer"
+        {wordDefinition.word} | <span>{wordDefinition.pronounceVi}</span> | <span class="cursor-pointer"
           ><i class="fa-solid fa-headphones"></i> US</span
         >|
         <span class="cursor-pointer"
