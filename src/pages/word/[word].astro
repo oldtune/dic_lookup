@@ -9,7 +9,6 @@ if (!word) {
 
 let response = await fetch(`${import.meta.env.BACKEND}api/word/${word}`);
 let wordDefinition: WordDefinition = await response.json();
-console.log(wordDefinition);
 ---
 
 <Layout title="" word="''">
@@ -24,10 +23,26 @@ console.log(wordDefinition);
           ><i class="fa-solid fa-headphones"></i> UK</span
         >
       </h2>
-      <div>
-        <h4 class="uppercase word-detail">Nounce</h4>
-        Wiggling
-      </div>
+      <Fragment>
+        {
+          wordDefinition.wordTypes.map(wordType => (
+            <div class="mb-2">
+              <h4 class="uppercase word-detail">{wordType.wordTypeVi}</h4>
+              <div class="ml-4">{wordType.meanings.map(meaning => (
+                <li>{meaning.meaningVi}</li>
+                <div class="ml-4">{meaning.examples.map(example=> (
+                  <div class="mb-2">
+                    <h6>- {example.example}</h6>
+                    <h6 class="ml-2">{example.viMeaning}</h>  
+                  </div>
+                ))}
+                </div>
+              ))}
+              </div>
+            </div>
+          ))
+        }
+      </Fragment>
     </div>
   </div>
 </Layout>

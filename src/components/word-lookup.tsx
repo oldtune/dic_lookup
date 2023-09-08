@@ -16,6 +16,10 @@ export const WordLookup: React.FC<WordLookupProps> = (props: WordLookupProps) =>
   const suggestionDiaglogRef = useRef<any>();
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    setSelectedIndex(-1);
+  }
 
   useEffect(() => {
     if (inputValue && inputValue.trim()) {
@@ -105,7 +109,7 @@ export const WordLookup: React.FC<WordLookupProps> = (props: WordLookupProps) =>
   return (<div className="relative overflow-visible">
     <div className="relative word-lookup-wrapper">
       <form ref={formRef} onSubmit={(event) => onSubmit(event)}>
-        <input placeholder="Search here..." onKeyDown={(event) => keyDownHandler(event)} onChange={(event) => setInputValue(event.target.value)} className="w-full h-10" />
+        <input placeholder="Search here..." onKeyDown={(event) => keyDownHandler(event)} onChange={onChangeHandler} className="w-full h-10" />
         <i className="fa-solid fa-magnifying-glass search-icon absolute cursor-pointer" title="Perform search" onClick={() => navigateIfNotEmpty(inputValue)}></i>
       </form>
     </div>
